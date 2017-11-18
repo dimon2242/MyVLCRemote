@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MyVLCRemote</string>
+    <string name="connect_and_disconnect_bsm">Connect/Disconnect</string>
+    <string name="bsm_enabled">Battery Saver Mode enabled!</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="volume">Volume</string>
+    <string name="connected">Connected</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="preferences">Preferences</string>
+    <string name="host">Host</string>
+    <string name="port">Port</string>
+    <string name="password">Password</string>
+    <string name="connection_check_freq">Ping-pong frequency</string>
+    <string name="connection_check_freq_summary">Connection check frequency</string>
+    <string name="disconnect_when_stop">Disconnect when app in background</string>
+    <string name="disconnect_when_stop_summary">Disconnect when app in background\nfor low battery consumption</string>
+    <string name="battery_saver_mode">Battery Saver Mode</string>
+    <string name="battery_saver_mode_summary">Disable all network transfer except command interface for low battery consumption and \nsaving traffic.</string>
+    <string name="no_title">No title</string>
+</resources>

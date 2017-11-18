@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MyVLCRemote</string>
+    <string name="connect_and_disconnect_bsm">Подключить/Отключить</string>
+    <string name="bsm_enabled">Battery Saver Mode включён!</string>
+    <string name="disconnected">Отключено</string>
+    <string name="volume">Громкость</string>
+    <string name="connected">Подключено</string>
+    <string name="connect">Подключить</string>
+    <string name="disconnect">Отключить</string>
+    <string name="preferences">Настройки</string>
+    <string name="host">Хост</string>
+    <string name="port">Порт</string>
+    <string name="password">Пароль</string>
+    <string name="connection_check_freq">Частота проверки подключения</string>
+    <string name="connection_check_freq_summary">Частота проверки в секундах</string>
+    <string name="disconnect_when_stop">Отключаться при сворачивании</string>
+    <string name="disconnect_when_stop_summary">Отключение соединения при сворачивании\nповышает автономность</string>
+    <string name="battery_saver_mode">Режим экономии</string>
+    <string name="battery_saver_mode_summary">Отключены все процессы передачи данных кроме командных процессов.\nПозволяет серьёзно экономить на трафике и заряде.</string>
+    <string name="no_title">Без названия</string>
+</resources>
