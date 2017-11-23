@@ -149,6 +149,11 @@ public class RemoteFragment extends Fragment {
             mConnectionStatusHandler.sendEmptyMessage(3);
     }
 
+    private static void resetDurations() {
+        sMediaTimeDuration.setText("00:00");
+        sMediaTimelineLength.setText("00:00");
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.remote_fragment, container, false);
@@ -177,7 +182,7 @@ public class RemoteFragment extends Fragment {
             mConnectionStateTextView.setText(getString(R.string.bsm_enabled));
             mVolumeTextView.setText(getString(R.string.volume));
         }
-
+        resetDurations();
 
 
         sConnectionButton.setOnClickListener(new View.OnClickListener() {
@@ -375,6 +380,8 @@ public class RemoteFragment extends Fragment {
 
                     sMediaTimeDuration.setText(lengthString);
                     mSeekBarTimeline.setProgress(msg.arg1);
+                } else if (msg.what == 1) {
+                    resetDurations();
                 }
             }
         }
@@ -431,22 +438,31 @@ public class RemoteFragment extends Fragment {
         public void run() {
             /**
              * Count try for connecting to server
+             * Disabled for now
              */
             count = 5;
             while(!globalStop) {
-                if(count <= 0)
+                /*if(count <= 0)
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
                             stopSrv();
                         }
                     }).start();
+                    */
                 if(mPingPongConnector.isConnected()) {
                     count = 5;
                     mConnectionStatusHandler.sendEmptyMessage(1);
                 } else {
-                    count--;
-                    mConnectionStatusHandler.sendEmptyMessage(0);
+                    /*count--;
+                    mProgressHandler.obtainMessage(1).sendToTarget();
+                    mConnectionStatusHandler.sendEmptyMessage(0);*/
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopSrv();
+                        }
+                    }).start();
                 }
                 try {
                     Thread.sleep(mRefreshFreq * 1000);

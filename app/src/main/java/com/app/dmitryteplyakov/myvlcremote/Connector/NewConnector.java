@@ -162,13 +162,13 @@ public class NewConnector {
 
                 //Log.d(TAG, "RESULT: " + Integer.toString(progress));
             } else
-                return -1;
-        } catch(IOException e) {
-            e.printStackTrace();
-            return -1;
-        } catch(NumberFormatException e) {
-            e.printStackTrace();
-            return -1;
+                return 0;
+        } catch(IOException | NumberFormatException e) {
+            if(e.getMessage().equals("Broken pipe")) {
+                Log.d(TAG, "Connection refused by host");
+            } else
+                e.printStackTrace();
+            return 0;
         }
         return progress;
     }
