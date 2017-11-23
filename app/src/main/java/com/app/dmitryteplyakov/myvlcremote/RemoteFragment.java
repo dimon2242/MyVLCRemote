@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -87,7 +88,15 @@ public class RemoteFragment extends Fragment {
         sDelay = 200;
     }
 
-    private void connect() {
+    private boolean connect() {
+        boolean pingPongStateConnection;
+        boolean timelineStateConnection;
+        boolean commonStateConnection;
+        boolean volumeStateConnection;
+        boolean newCommandStateConnection;
+        boolean resultStateConnetion;
+        resultStateConnetion = true;
+
         globalStop = false;
         String host = mSp.getString("host", "");
         String port = mSp.getString("port", "");
@@ -102,28 +111,36 @@ public class RemoteFragment extends Fragment {
             mConnectorTimeline = new NewConnector(host, port, password);
             mPingPongConnector = new NewConnector(host, port, password);
             mCommonConnector = new NewConnector(host, port, password);
-            mConnectorTimeline.connect();
-            mPingPongConnector.connect();
-            mCommonConnector.connect();
+            timelineStateConnection = mConnectorTimeline.connect();
+            pingPongStateConnection = mPingPongConnector.connect();
+            commonStateConnection = mCommonConnector.connect();
+            resultStateConnetion = timelineStateConnection && pingPongStateConnection && commonStateConnection;
         }
         mConnectorVolume = new NewConnector(host, port, password);
         mNewCommandConnector = new NewConnector(host, port, password);
-        mConnectorVolume.connect();
-        mNewCommandConnector.connect();
+        volumeStateConnection = mConnectorVolume.connect();
+        newCommandStateConnection = mNewCommandConnector.connect();
 
+        resultStateConnetion &= volumeStateConnection && newCommandStateConnection;
+
+        return resultStateConnetion;
 
     }
 
     private void estabConnection() {
-        connect();
-        if(!mBatterySaverMode) {
-            mTimelineThread = new TimelineMonitor();
-            mConnectionStatusThread = new ConnectionStatusThread();
-            mTimelineThread.start();
-            mConnectionStatusThread.start();
-            mConnectionStatusHandler.sendEmptyMessage(2);
+        if(connect()) {
+            if (!mBatterySaverMode) {
+                mTimelineThread = new TimelineMonitor();
+                mConnectionStatusThread = new ConnectionStatusThread();
+                mTimelineThread.start();
+                mConnectionStatusThread.start();
+                mConnectionStatusHandler.sendEmptyMessage(2);
+            }
+            sConnState = true;
+        } else {
+            mConnectionStatusHandler.obtainMessage(4).sendToTarget();
+            globalStop = true;
         }
-        sConnState = true;
     }
 
     private void closeConnection() {
@@ -391,6 +408,9 @@ public class RemoteFragment extends Fragment {
                     sConnectionButton.setText(activity.getResources().getString(R.string.connect));
                     changeButtonState(false);
                     //Log.d("CONN", "HERE! CON");
+                } else if (msg.what == 4) {
+                    Log.d("HM?", "HERE!");
+                    Snackbar.make(activity.findViewById(R.id.fragment_container), activity.getResources().getString(R.string.err_connection_snackbar), Snackbar.LENGTH_SHORT).show();
                 }
             }
         }

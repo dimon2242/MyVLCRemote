@@ -87,7 +87,10 @@ public class NewConnector {
              */
             mBufferedReader.readLine();
             mBufferedReader.readLine();
-            mBufferedReader.readLine();
+            if(mBufferedReader.readLine().equals("Wrong password")) {
+                Log.d(TAG, "Wrong password.");
+                return false;
+            }
 
         } catch(ConnectException e) {
             Log.i(TAG, "Cannot connected. Connection refused by server");

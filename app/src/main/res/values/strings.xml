@@ -18,4 +18,5 @@
     <string name="battery_saver_mode">Режим экономии</string>
     <string name="battery_saver_mode_summary">Отключены все процессы передачи данных кроме командных процессов.\nПозволяет серьёзно экономить на трафике и заряде.</string>
     <string name="no_title">Без названия</string>
+    <string name="err_connection_snackbar">Ошибка. Проверьте подключение и пароль</string>
 </resources>
