@@ -94,8 +94,8 @@ public class RemoteFragment extends Fragment {
         boolean commonStateConnection;
         boolean volumeStateConnection;
         boolean newCommandStateConnection;
-        boolean resultStateConnetion;
-        resultStateConnetion = true;
+        boolean resultStateConnection;
+        resultStateConnection = true;
 
         globalStop = false;
         String host = mSp.getString("host", "");
@@ -114,16 +114,16 @@ public class RemoteFragment extends Fragment {
             timelineStateConnection = mConnectorTimeline.connect();
             pingPongStateConnection = mPingPongConnector.connect();
             commonStateConnection = mCommonConnector.connect();
-            resultStateConnetion = timelineStateConnection && pingPongStateConnection && commonStateConnection;
+            resultStateConnection = timelineStateConnection && pingPongStateConnection && commonStateConnection;
         }
         mConnectorVolume = new NewConnector(host, port, password);
         mNewCommandConnector = new NewConnector(host, port, password);
         volumeStateConnection = mConnectorVolume.connect();
         newCommandStateConnection = mNewCommandConnector.connect();
 
-        resultStateConnetion &= volumeStateConnection && newCommandStateConnection;
+        resultStateConnection &= volumeStateConnection && newCommandStateConnection;
 
-        return resultStateConnetion;
+        return resultStateConnection;
 
     }
 
@@ -416,7 +416,6 @@ public class RemoteFragment extends Fragment {
                     changeButtonState(false);
                     //Log.d("CONN", "HERE! CON");
                 } else if (msg.what == 4) {
-                    Log.d("HM?", "HERE!");
                     Snackbar.make(activity.findViewById(R.id.fragment_container), activity.getResources().getString(R.string.err_connection_snackbar), Snackbar.LENGTH_SHORT).show();
                 }
             }

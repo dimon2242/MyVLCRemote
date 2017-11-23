@@ -18,4 +18,5 @@
     <string name="battery_saver_mode">Battery Saver Mode</string>
     <string name="battery_saver_mode_summary">Disable all network transfer except command interface for low battery consumption and \nsaving traffic.</string>
     <string name="no_title">No title</string>
+    <string name="err_connection_snackbar">Error. Check connection and password</string>
 </resources>
